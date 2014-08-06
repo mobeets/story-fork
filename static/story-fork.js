@@ -1,12 +1,7 @@
 var radius = 400 / 2;
-// var radius = 600 / 2;
 
 var tree = d3.layout.tree()
-    // .size([360, radius - 120]);
-    // .size([360, radius - 80]);
     .size([360, radius]);
-    // The below was making it break for trees of one parent and one child
-    // .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
 
 var diagonal = d3.svg.diagonal.radial()
     .projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
@@ -21,8 +16,6 @@ var line = d3.svg.line()
     var r = d.y, a = (d.x - 90) / 180 * Math.PI;
     return r * Math.sin(a);
   });
-  // .interpolate("basis");
-  // .projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
 
 var vis = d3.select("#chart").append("svg")
     .attr("width", radius * 2 + 10)
@@ -43,7 +36,7 @@ function get_rotation(d) {
 }
 
 function get_tine_url(fcn, story_id, tine_id) {
-  return '/story_fork/' + fcn + '/' + story_id + '/' + tine_id;
+  return '/' + fcn + '/' + story_id + '/' + tine_id;
 }
 
 function highlight_tweet_node(obj) {
@@ -65,7 +58,7 @@ function highlight_tweet_node(obj) {
     var url = get_tine_url('tine_embedded', story_id, tine_id);
     var tine_url =  tine.attr("url");
     $('#tweet_link').html('Loading tweet...').load(url);
-    // $('#tweet_update_link').html(' and <a href="/story_fork/update/pleasedoit">update</a>');
+    // $('#tweet_update_link').html(' and <a href="/update/pleasedoit">update</a>');
     $('#tweet_link').css('outline', 'orange solid');
 
     var url = get_tine_url('tine_path', story_id, tine_id);
@@ -73,22 +66,6 @@ function highlight_tweet_node(obj) {
     var url = get_tine_url('reply', story_id, tine_id);
     $('#tweet_reply').html('Reply!').load(url);
 }
-
-function load_data(json) {
-  var nodes = tree.nodes(json);
-
-  var link = vis.selectAll("path.link")
-      .data(tree.links(nodes))
-    .enter().append("path")
-      .attr("class", "link")
-      // .attr("extra-source", function(d) {return Object.keys(d.source);})
-      // .attr("extra-target", function(d) {return Object.keys(d.target);})
-      .attr("extra-source-x", function(d) {return d.source.x;})
-      .attr("extra-source-y", function(d) {return d.source.y;})
-      .attr("extra-target-x", function(d) {return d.target.x;})
-      .attr("extra-target-y", function(d) {return d.target.y;})
-      // .attr("extra", line);
-      .attr("d", diagonal);
 
 /*
 SVG HELP: http://www.ibm.com/developerworks/library/x-svgint/
@@ -111,12 +88,28 @@ DONE:
     make a div for each tine; add the hover jquery to each
 */
 
+function load_data(json) {
+  var nodes = tree.nodes(json);
+
+  var link = vis.selectAll("path.link")
+      .data(tree.links(nodes))
+    .enter().append("path")
+      .attr("class", "link")
+      // .attr("extra-source", function(d) {return Object.keys(d.source);})
+      // .attr("extra-target", function(d) {return Object.keys(d.target);})
+      .attr("extra-source-x", function(d) {return d.source.x;})
+      .attr("extra-source-y", function(d) {return d.source.y;})
+      .attr("extra-target-x", function(d) {return d.target.x;})
+      .attr("extra-target-y", function(d) {return d.target.y;})
+      // .attr("extra", line);
+      .attr("d", diagonal);
+
   var node = vis.selectAll("g.node")
       .data(nodes)
     .enter().append("g")
       .attr("class", "node")
       .attr("desc", function(d) { return d.name; })
-      .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+      .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; });
 
   node.append("circle")
       .attr("class", function(d) { return d.index==1 ? "root-circle" : "nonroot-circle"; })
@@ -124,13 +117,8 @@ DONE:
 
   node.append("text")
       .attr("dy", ".31em")
-
-      // turn in/out
-      // .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
-      // .attr("transform", function(d) { return d.x < 180 ? "rotate(" + get_rotation(d) + ")translate(8)" : "rotate(" + get_rotation(d) + ")translate(-8)"; })
       .attr("text-anchor", function(d) { return d.x < 180 ? "end" : "start"; })
       .attr("transform", function(d) { return d.x < 180 ? "rotate(" + get_rotation(d) + ")translate(-8)" : "rotate(" + get_rotation(d) + ")translate(8)"; })
-
       .attr("url", function(d) { return d.url; })
       .attr("story_id", function(d) {return d.story_index;})
       .attr("tine_id", function(d) {return d.index;})
@@ -144,7 +132,9 @@ DONE:
   if (tine_index >= 0) {
     highlight_tweet_node($('.tine-' + tine_index).parent());
   }
+};
 
+function add_mouse_interactions() {
   $('body').on('mouseover', '.node', function () {
     var tine = $(this).children("text");
     var tine_class =  tine.attr("class");
@@ -155,5 +145,14 @@ DONE:
     $('.' + tine_class).hide();
   });
   $('body').on('click', '.node', function () { highlight_tweet_node($(this)) });
+}
 
-};
+function init() {
+  var story_index = $("#story_index").attr('value');
+  if (story_index) {
+    $.getJSON("/load_data/" + story_index, load_data).done(add_mouse_interactions);
+  }
+  else {
+    $('#create_story_link').load('/create');
+  }
+}

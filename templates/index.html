@@ -1,0 +1,19 @@
+<%inherit file="/base.html"/>
+
+<h3><b>Existing stories:</b></h3>
+% for story in story_list:
+    <a href="/view/${story.index}">Story ${story.index}: ${story.root_tine.content}</a><br>
+% endfor
+<br>
+<br>
+<table>
+    <tr>
+        <td><h3><b>Create a story:</b></h3></td>
+        <td><div id="create_story_link"></div></td>
+        <td> then <a href="/update/pleasedoit"> UPDATE</a> story fork</td>
+    </tr>
+</table>
+<div id="update_story_fork">
+</div>
+
+
