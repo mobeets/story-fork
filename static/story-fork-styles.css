@@ -1,0 +1,36 @@
+g {
+  padding-left: 20px;
+}
+.node circle {
+  fill: white;
+  stroke: black;
+  stroke-width: 1.5px;
+}
+
+.node {
+  font: 10px sans-serif;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+
+#story_content {
+    background-color: #DADADA;
+    width: 70%;
+}
+#tweet_link {
+    width: 70%;
+}
+#leaf_tine {
+    color: #C97200;
+}
+#root_tine {
+    font-weight: bold;
+    color: black;
+}
+#mid_tine {
+    color: black;
+}
