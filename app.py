@@ -1,6 +1,8 @@
 import os
 import cherrypy
 from mako.lookup import TemplateLookup
+import conf
+from bin.db_connect import Engine
 from bin.model import StoryForkData, PRE_ROOT_TINE_ID, BASE_USER, URL, fake_story
 
 lookup = TemplateLookup(directories=['templates'])
@@ -147,11 +149,29 @@ class Root(object):
             data-url="{url}">(Please refresh if you see this)
             </a>""".format(text=text, user=BASE_USER, url=url)
 
-def main(db, full_icon_url):
+def inner_main(db, full_icon_url):
     db.create_singleton_if_not_exists(StoryForkData, StoryForkData.empty_singleton)
     db_session = db.session()
     datastore = StoryForkData.singleton(db_session)
     datastore.update()
     db_session.commit()
     print datastore.print_status()
-    return Root(datastore, db_session, full_icon_url), lambda: True
+    return Root(datastore, db_session, full_icon_url)
+
+def main():
+    cherrypy.config.update(conf.settings)
+    
+    db_engine = Engine()
+    story_fork_app = inner_main(db_engine, '')
+    root_app = cherrypy.tree.mount(story_fork_app, '/', conf.root_settings)
+    root_app.merge(conf.settings)
+
+    if hasattr(cherrypy.engine, "signal_handler"):
+        cherrypy.engine.signal_handler.subscribe()
+    if hasattr(cherrypy.engine, "console_control_handler"):
+        cherrypy.engine.console_control_handler.subscribe()
+    cherrypy.engine.start()
+    cherrypy.engine.block()
+
+if __name__ == '__main__':
+    main()

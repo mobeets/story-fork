@@ -3,9 +3,9 @@ from collections import defaultdict
 
 from sqlalchemy import Column, Integer, PickleType
 
+from bin.db_connect import Base
+from bin.mutabledict import MutableDict
 from twitter_search import user_handle, user_mentions, status_user_info, status_expanded_urls, status_text, status_dt, status_url, status_id, status_embed_html, status_is_retweet
-from apps.db_connect import Base
-from apps.mutabledict import MutableDict
 
 DOMAINS = ['www.jehosafet.com', 'thu-jehosafet.herokuapp.com']
 BASE_URLS = ['http://' + domain + '/story_fork/view/' for domain in DOMAINS]
