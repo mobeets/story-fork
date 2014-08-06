@@ -1,4 +1,6 @@
 ### Local set-up:
+
+Install requirements, create heroku app, create heroku database
 ```
 $ sudo pip install -r requirements.txt
 $ heroku create --stack cedar
@@ -21,7 +23,12 @@ Make sure to replace `HEROKU_POSTGRESQL_AQUA_URL` in case it's different in your
 ```
 $ heroku config | grep HEROKU_POSTGRESQL
 $ heroku pg:promote HEROKU_POSTGRESQL_AQUA_URL
+```
+
+Now, create a local database.
+```
 $ psql
+
 ># CREATE DATABASE test;
 ># \q
 
