@@ -59,7 +59,7 @@ function highlight_tweet_node(obj) {
     var tine_url =  tine.attr("url");
     $('#tweet_link').html('Loading tweet...').load(url);
     // $('#tweet_update_link').html(' and <a href="/update/pleasedoit">update</a>');
-    $('#tweet_link').css('outline', 'orange solid');
+    // $('#tweet_link').css('outline', 'orange solid');
 
     var url = get_tine_url('tine_path', story_id, tine_id);
     $('#tweet_story').html('Loading story...').load(url);

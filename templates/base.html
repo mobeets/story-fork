@@ -8,10 +8,8 @@
         
         <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
-        
         <link rel=StyleSheet href="/static/story-fork-styles.css" type="text/css"/>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
-        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -23,20 +21,23 @@
           ga('send', 'pageview');
         </script>
 
-        <title>Story Fork</title>
+        <title>Story Fork (Jehosafet)</title>
     </head>
     <body>
         <div id="wrapper">
-            <h1><a href="/">Story Fork</a></h1>
-            <i>Building story trees, tweet by tweet.</i>
-            <hr>
-            ${error_msg}
-            <br>
-            <a href="http://www.jehosafet.com/elsewhere/item/story-fork" target="_blank">What? I still don't understand.</a>
-            <hr>
-            ${self.body()}
+            <div id="content">
+                <!-- <span class="byline">&#9028; <a href="http://www.jehosafet.com" target="_blank">Jehosafet</a></span> -->
+                <span class="byline">&#10555; <a href="http://www.jehosafet.com" target="_blank">Jehosafet</a></span>
+                <h1><a href="/">Story Fork</a></h1>
+                <i>Building story trees, tweet by tweet. <a href="http://www.jehosafet.com/elsewhere/item/story-fork" target="_blank">What?</a></i>
+                ${error_msg}
+                <hr>
+                ${self.body()}
+            </div,
         </div>
 
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <script>
             !function(d, s, id){
                 var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location)?'http': 'https';

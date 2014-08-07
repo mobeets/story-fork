@@ -53,7 +53,6 @@ class Root(object):
         if story_index in self.datastore.story_data:
             story = self.datastore.story_data[story_index]
             title = 'Story {0}: {1}'.format(story_index, story.root_tine.content)
-            print story.to_json()
             return json.dumps(story.to_json())
         return json.dumps({})
 
@@ -153,7 +152,7 @@ class Root(object):
             class="twitter-mention-button"
             data-size="large"
             data-related="{user}"
-            data-url="{url}">(Please refresh if you see this)
+            data-url="{url}">(Click here)
             </a>""".format(text=text, user=BASE_USER, url=url)
 
 def inner_main(db):

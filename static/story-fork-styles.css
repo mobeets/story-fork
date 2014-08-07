@@ -1,3 +1,36 @@
+body {
+  /*background-color: #f9f5da;*/
+  font-family: 'Droid Serif', serif;
+}
+#wrapper {
+  background-color: white;
+  margin: 0 auto; /* centers */
+  display: table; /* takes width of children */
+  width: 600px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+}
+#content {
+  padding-top: 5px;
+  /*padding-bottom: 20px;*/
+  padding-left: 20px;
+  padding-right: 20px;
+}
+a:visited {
+  color: inherit;
+}
+.byline {
+  float: right;
+  font-size: 80%;
+}
+.byline a {
+  text-decoration: none;
+  border-bottom: dotted 1px black;
+}
+
 g {
   padding-left: 20px;
 }
@@ -18,11 +51,13 @@ g {
 }
 
 #story_content {
-    background-color: #DADADA;
-    width: 70%;
+  background-color: #F0F0F0;
+  font-family: 'Inconsolata', sans-serif;
+  max-width: 600px;
+  padding: 5px;
+
 }
 #tweet_link {
-    width: 70%;
 }
 #leaf_tine {
     color: #C97200;

@@ -7,7 +7,7 @@ from bin.db_connect import Base
 from bin.mutabledict import MutableDict
 from twitter_search import user_handle, user_mentions, status_user_info, status_expanded_urls, status_text, status_dt, status_url, status_id, status_embed_html, status_is_retweet
 
-DOMAINS = ['www.jehosafet.com', 'thu-jehosafet.herokuapp.com']
+DOMAINS = ['www.jehosafet.com', 'thu-jehosafet.herokuapp.com', 'story-fork.herokuapp.com']
 BASE_URLS = ['http://' + domain + '/story_fork/view/' for domain in DOMAINS]
 URL = BASE_URLS[0]
 BASE_USER = 'st_f_'
